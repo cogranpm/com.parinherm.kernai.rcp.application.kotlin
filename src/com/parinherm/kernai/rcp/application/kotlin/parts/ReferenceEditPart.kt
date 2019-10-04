@@ -5,7 +5,8 @@ import com.parinherm.kernai.databinding.LocalDateConverter
 import com.parinherm.kernai.ui.viewModel.ReferenceItemViewModel
 import org.eclipse.core.databinding.DataBindingContext
 import org.eclipse.core.databinding.UpdateValueStrategy
-import org.eclipse.core.databinding.beans.PojoProperties
+//import org.eclipse.core.databinding.beans.PojoProperties
+import org.eclipse.core.databinding.beans.typed.PojoProperties
 import org.eclipse.core.databinding.conversion.IConverter
 import org.eclipse.core.databinding.conversion.StringToNumberConverter
 import org.eclipse.e4.core.di.annotations.Optional
@@ -68,15 +69,20 @@ class ReferenceEditPart {
 	*/
 		
 		val target_body = WidgetProperties.text(SWT.Modify).observe(txtBody)
-		val model_body = PojoProperties.value("body").observeDetail<ReferenceItem>(model.selectedItem)
+//		val model_body = PojoProperties.value("body").observeDetail<ReferenceItem>(model.selectedItem)
+		val model_body = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(model.selectedItem)
 		
 		val target_created = WidgetProperties.selection().observe(dteCreated)
-		val model_created = PojoProperties.value("body").observeDetail<ReferenceItem>(model.selectedItem)
+		//val model_created = PojoProperties.value("body").observeDetail<ReferenceItem>(model.selectedItem)
+		val model_created = PojoProperties.value<ReferenceItem, String>("createdDate").observeDetail<ReferenceItem>(model.selectedItem)
 		
 		val convertToDate : IConverter<String, LocalDate> = IConverter.create(String::class, LocalDate::class, {v :String  -> LocalDateTime.now().toLocalDate()})
 		val convertToString: IConverter<LocalDate, String> = IConverter.create(LocalDate::class, String::class, {v :LocalDate -> ""})
 		
 		ctx.bindValue(target_body, model_body)
+		ctx.bindValue(target_created, model_created)
+		
+		
 		val convToDate: UpdateValueStrategy<String, LocalDate> = UpdateValueStrategy.create(convertToDate)
 		val convFromDate:  UpdateValueStrategy<LocalDate, String> = UpdateValueStrategy.create(convertToString)
 	

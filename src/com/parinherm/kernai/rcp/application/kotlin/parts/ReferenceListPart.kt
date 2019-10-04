@@ -74,7 +74,6 @@ class ReferenceListPart {
 		tableLayout.setColumnData(bodyColumn.getColumn(), ColumnWeightData(100))
 
 		listViewer.addSelectionChangedListener { e ->
-			println("selection  made")
 			val item: IStructuredSelection = e.getStructuredSelection()
 			val selectedItem = item.getFirstElement() as ReferenceItem
 			selectionService.setSelection(selectedItem)
