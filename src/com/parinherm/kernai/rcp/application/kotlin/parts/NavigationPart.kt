@@ -98,6 +98,7 @@ class NavigationPart {
 		tableViewer.setInput(createInitialDataModel())
 		tableViewer.getTable().setLayoutData(GridData(GridData.FILL_BOTH))
 		*/
+		logger.error("logging message yo")
 		val root = Composite(parent, SWT.NONE)
 		
         navigationWorkflow = NavigationWorkflowImpl(modelService, application, window, partService)
