@@ -10,15 +10,23 @@ import org.eclipse.e4.ui.workbench.modeling.EModelService
 import org.eclipse.e4.ui.workbench.modeling.EPartService
 import org.eclipse.e4.ui.workbench.modeling.EPartService.PartState
 import org.osgi.framework.FrameworkUtil
+import javax.inject.Inject
 
 
 
-class NavigationWorkflowImpl : NavigationWorkflow {
+class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, application: MApplication, window: MWindow, partService: EPartService) : NavigationWorkflow {
 
-    private lateinit var modelService: EModelService
-    private lateinit var application: MApplication
-    private lateinit var window: MWindow
-    private lateinit var partService: EPartService
+    private var modelService: EModelService
+    private var application: MApplication
+    private var window: MWindow
+    private var partService: EPartService
+	
+	init {
+		this.modelService = modelService
+        this.application = application
+        this.window = window
+        this.partService = partService
+	}
 
     private val mainSash: MPartSashContainer
         get() = modelService.find("com.parinherm.kernai.rcp.application.kotlin.partsashcontainer.main",
@@ -27,16 +35,14 @@ class NavigationWorkflowImpl : NavigationWorkflow {
     private val mainStack: MPartStack
         get() = modelService.find(MAIN_STACK_ID, window) as MPartStack
 
-    private constructor() {
 
-    }
 
-    constructor(modelService: EModelService, application: MApplication, window: MWindow, partService: EPartService) {
-        this.modelService = modelService
-        this.application = application
-        this.window = window
-        this.partService = partService
-    }
+//    constructor(modelService: EModelService, application: MApplication, window: MWindow, partService: EPartService) {
+//        this.modelService = modelService
+//        this.application = application
+//        this.window = window
+//        this.partService = partService
+//    }
 
     
     override fun navigateTo(view: String) {

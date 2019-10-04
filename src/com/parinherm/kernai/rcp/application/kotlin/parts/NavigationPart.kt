@@ -40,6 +40,7 @@ import java.util.Arrays
 import javax.annotation.PostConstruct
 import javax.inject.Inject
 import javax.inject.Named
+import org.eclipse.e4.core.contexts.ContextInjectionFactory
 
 class NavigationPart {
 
@@ -101,7 +102,9 @@ class NavigationPart {
 		logger.error("logging message yo")
 		val root = Composite(parent, SWT.NONE)
 		
-        navigationWorkflow = NavigationWorkflowImpl(modelService, application, window, partService)
+		//new trick, to get my own classes instantiated with DI use the following method
+		//this allows the class NavigationWorkflowImpl to use @Inject itself
+		navigationWorkflow = ContextInjectionFactory.make(NavigationWorkflowImpl::class.java, context)
         ApplicationController.init(shell)
         ApplicationController.Register(navigationWorkflow)
  		
@@ -113,20 +116,31 @@ class NavigationPart {
         navTreeViewer.setContentProvider(NavigationTreeContentProvider())
         navTreeViewer.setInput(ApplicationController.navigationItems)
 
-        navTreeViewer.addSelectionChangedListener(object : ISelectionChangedListener {
-
-            
-          override  fun selectionChanged(event: SelectionChangedEvent) {
-                val selection = navTreeViewer.getSelection() as IStructuredSelection
+//        navTreeViewer.addSelectionChangedListener(object : ISelectionChangedListener {
+//
+//            
+//          override  fun selectionChanged(event: SelectionChangedEvent) {
+//                val selection = navTreeViewer.getSelection() as IStructuredSelection
+//                val firstElement = selection.getFirstElement()
+//                val item = firstElement as NavigationItem
+//                if (item.viewName != "") {
+//                   
+//                   ApplicationController.navigateTo(item.viewName)
+//                }
+//
+//            }
+//        })
+		
+		navTreeViewer.addSelectionChangedListener({
+				_ ->
+				val selection = navTreeViewer.getSelection() as IStructuredSelection
                 val firstElement = selection.getFirstElement()
                 val item = firstElement as NavigationItem
                 if (item.viewName != "") {
                    
                    ApplicationController.navigateTo(item.viewName)
                 }
-
-            }
-        })
+		})
 		setupConnections()
 
 	}
