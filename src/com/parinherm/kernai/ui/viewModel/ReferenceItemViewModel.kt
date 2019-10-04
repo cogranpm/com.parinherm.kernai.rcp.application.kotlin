@@ -3,6 +3,7 @@ package com.parinherm.kernai.ui.viewModel
 import com.parinherm.kernai.data.entity.ReferenceItem
 import org.eclipse.core.databinding.observable.list.WritableList
 import org.eclipse.core.databinding.observable.value.WritableValue
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 class ReferenceItemViewModel {
@@ -11,8 +12,33 @@ class ReferenceItemViewModel {
 	val input = WritableList(items, ReferenceItem::class);
 	
 	init {
-		var item1  = ReferenceItem("Kitlin is printint lines", LocalDateTime.now().toLocalDate())
-		var item2  = ReferenceItem("some  match stuff", LocalDateTime.now().toLocalDate())
+		var item1  = ReferenceItem("Kitlin is printint lines",
+			 LocalDateTime.now().toLocalDate(),
+			LocalDateTime.now().toLocalTime(),
+			LocalDateTime.now(),
+			1_147_483_647,
+			3000000000,
+			32767,
+			127,
+			2.7182818284f,
+			3.14,
+			false
+			)
+		
+		var item2  = ReferenceItem("some  match stuff",
+			 LocalDate.of(1971, 12, 4),
+			LocalDateTime.of(1971, 12, 4, 8, 45, 20).toLocalTime(),
+			LocalDateTime.now(),
+			-1_147_483_647,
+			-3000000000,
+			-32767,
+			-127,
+			-2.7182818284f,
+			-3.14,
+			true
+			)
+		
+		
 		items.add(item1)
 		items.add(item2)
 		selectedItem.value = item1

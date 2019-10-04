@@ -1,3 +1,15 @@
+/*
+ custom class to implement databinding for LocalDate java 8 new date classes
+ take from the vogella tutorials on datababinding:
+ https://www.vogella.com/tutorials/EclipseDataBinding/article.html
+ use this class in databinding statements when using the SWT DateTime control
+ ie:
+ 		val dateTimeSelectionProperty: DateTimeSelectionProperty<DateTime, Any> = DateTimeSelectionProperty()
+		val dateTimeObservableValue = dateTimeSelectionProperty.observe(dteCreated)
+		val model_created = PojoProperties.value<ReferenceItem, LocalDate>("createdDate").observeDetail<ReferenceItem>(model.selectedItem)
+ 
+*/
+
 package com.parinherm.kernai.databinding
 
 import org.eclipse.jface.databinding.swt.WidgetValueProperty
@@ -41,7 +53,7 @@ class DateTimeSelectionProperty<DateTime, Any> () : WidgetValueProperty<Widget, 
 				ta.get(ChronoField.MINUTE_OF_HOUR),
 				ta.get(ChronoField.SECOND_OF_MINUTE))
 			} else {
-				dateTime.setTime(ta.get(ChronoField.YEAR),
+				dateTime.setDate(ta.get(ChronoField.YEAR),
 					ta.get(ChronoField.MONTH_OF_YEAR) - MONTH_MAPPING_VALUE,
 					ta.get(ChronoField.DAY_OF_MONTH))
 			}
