@@ -98,7 +98,8 @@ class ReferenceEditPart {
 		val timeOb = timeProp.observe(dteCreatedTime)
 		val model_time = PojoProperties.value<ReferenceItem, LocalTime>("createdTime").observeDetail<ReferenceItem>(model.selectedItem)
 		
-		val propBool = WidgetProperties.singleSelectionIndex<Button>().observe(btnBool)
+		
+		val propBool = WidgetProperties.buttonSelection().observe(btnBool)
 		var modelBool = PojoProperties.value<ReferenceItem, Boolean>("testBool").observeDetail<ReferenceItem>(model.selectedItem)
 		
 		ctx.bindValue(target_body, model_body)
