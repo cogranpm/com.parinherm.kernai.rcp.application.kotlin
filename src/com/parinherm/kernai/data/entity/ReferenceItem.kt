@@ -15,7 +15,8 @@ data class ReferenceItem (var body: String = "",
 						  var testByte: Byte,
 						  var testFloat: Float,
 						  var testDouble: Double,
-						  var testBool: Boolean){
+						  var testBool: Boolean,
+						  var testCombo: String){
 	
 //	constructor (body: String): this(){
 //		this.body = body

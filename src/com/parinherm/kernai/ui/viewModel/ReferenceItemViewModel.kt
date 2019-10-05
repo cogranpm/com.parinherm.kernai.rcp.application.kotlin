@@ -5,11 +5,13 @@ import org.eclipse.core.databinding.observable.list.WritableList
 import org.eclipse.core.databinding.observable.value.WritableValue
 import java.time.LocalDate
 import java.time.LocalDateTime
+import com.parinherm.kernai.data.entity.LookupDetail
 
 class ReferenceItemViewModel {
 	var selectedItem: WritableValue<ReferenceItem> = WritableValue()
 	var items: MutableList<ReferenceItem> = mutableListOf()
 	val input = WritableList(items, ReferenceItem::class);
+	val comboLookups = listOf(LookupDetail("mn", "Minnesota"), LookupDetail("ca", "California"))
 	
 	init {
 		var item1  = ReferenceItem("Kitlin is printint lines",
@@ -22,7 +24,8 @@ class ReferenceItemViewModel {
 			127,
 			2.7182818284f,
 			3.14,
-			false
+			false,
+			"mn"
 			)
 		
 		var item2  = ReferenceItem("some  match stuff",
@@ -35,7 +38,8 @@ class ReferenceItemViewModel {
 			-127,
 			-2.7182818284f,
 			-3.14,
-			true
+			true,
+			"ca"
 			)
 		
 		

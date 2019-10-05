@@ -40,6 +40,11 @@ import org.eclipse.core.databinding.conversion.NumberToStringConverter
 import org.eclipse.core.databinding.validation.ValidationStatus
 
 import kotlin.text.*
+import org.eclipse.jface.viewers.ComboViewer
+import org.eclipse.swt.widgets.Combo
+import org.eclipse.jface.viewers.ArrayContentProvider
+import org.eclipse.jface.viewers.LabelProvider
+import com.parinherm.kernai.data.entity.LookupDetail
 
 class ReferenceEditPart {
 	
@@ -57,6 +62,8 @@ class ReferenceEditPart {
 	private lateinit var btnBool: Button
 	private lateinit var spinInt: Spinner
 	private lateinit var txtLong: Text
+	private lateinit var cbvCombo: ComboViewer
+	
 	
 	private lateinit var lblError: Label
 	
@@ -99,6 +106,18 @@ class ReferenceEditPart {
 		txtLong = Text(parent, SWT.SINGLE)
 		txtLong.setLayoutData(GridData(GridData.FILL_HORIZONTAL))
 		
+		
+		var lblCombo = Label(parent, SWT.NONE)
+		lblCombo.text = "Combo"
+		cbvCombo = ComboViewer(parent, SWT.NONE)
+		cbvCombo.setContentProvider(ArrayContentProvider.getInstance())
+		cbvCombo.setLabelProvider(object: LabelProvider() {
+			override fun getText(element: Any): String {
+				val item: LookupDetail = element as LookupDetail
+				return item.label
+			}
+		})
+		cbvCombo.setInput(model.comboLookups)
 		
 		lblError = Label(parent, SWT.NONE)
 		val errLayout = GridData(GridData.FILL_HORIZONTAL);
