@@ -11,7 +11,7 @@ class ReferenceItemViewModel {
 	var selectedItem: WritableValue<ReferenceItem> = WritableValue()
 	var items: MutableList<ReferenceItem> = mutableListOf()
 	val input = WritableList(items, ReferenceItem::class);
-	val comboLookups = listOf(LookupDetail("mn", "Minnesota"), LookupDetail("ca", "California"))
+	val comboLookups = listOf(LookupDetail("mn", "Minnesota"), LookupDetail("ca", "California"), LookupDetail("ny", "New York"))
 	
 	init {
 		var item1  = ReferenceItem("Kitlin is printint lines",

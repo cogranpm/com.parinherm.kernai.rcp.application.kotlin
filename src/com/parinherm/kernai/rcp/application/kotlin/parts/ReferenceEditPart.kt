@@ -45,6 +45,9 @@ import org.eclipse.swt.widgets.Combo
 import org.eclipse.jface.viewers.ArrayContentProvider
 import org.eclipse.jface.viewers.LabelProvider
 import com.parinherm.kernai.data.entity.LookupDetail
+import org.eclipse.jface.databinding.viewers.ObservableListContentProvider
+import org.eclipse.jface.viewers.Viewer
+import org.eclipse.jface.databinding.viewers.typed.ViewerProperties
 
 class ReferenceEditPart {
 	
@@ -107,9 +110,11 @@ class ReferenceEditPart {
 		txtLong.setLayoutData(GridData(GridData.FILL_HORIZONTAL))
 		
 		
+		//combo box with lookup data
 		var lblCombo = Label(parent, SWT.NONE)
 		lblCombo.text = "Combo"
 		cbvCombo = ComboViewer(parent, SWT.NONE)
+		//cbvCombo.setContentProvider(ObservableListContentProvider<LookupDetail>())
 		cbvCombo.setContentProvider(ArrayContentProvider.getInstance())
 		cbvCombo.setLabelProvider(object: LabelProvider() {
 			override fun getText(element: Any): String {
@@ -117,7 +122,9 @@ class ReferenceEditPart {
 				return item.label
 			}
 		})
-		cbvCombo.setInput(model.comboLookups)
+		//note: a LookupDetail entity is stored in the combo
+		//can get it from a selection listener
+		cbvCombo.setInput(model.comboLookups)		
 		
 		lblError = Label(parent, SWT.NONE)
 		val errLayout = GridData(GridData.FILL_HORIZONTAL);
@@ -146,11 +153,18 @@ class ReferenceEditPart {
 		val propLong = WidgetProperties.text<Text>(SWT.Modify).observe(txtLong)
 		val modelLong = PojoProperties.value<ReferenceItem, Long>("testLong").observeDetail<ReferenceItem>(model.selectedItem)
 		
+		val propCombo = WidgetProperties.comboSelection().observe(cbvCombo.getCombo())
+		val modelCombo = PojoProperties.value<ReferenceItem, String>("testCombo").observeDetail(model.selectedItem)
+		
+		
 		val bindBody = ctx.bindValue(target_body, model_body)
 		ctx.bindValue(dateTimeObservableValue, model_created)
 		ctx.bindValue(timeOb, model_time)
 		ctx.bindValue(propBool, modelBool)
 		ctx.bindValue(propInt, modelInt)
+		ctx.bindValue(propCombo, modelCombo)
+	
+
 		
 		//long integer binding with validation and conversion
 		//the regex allows leading sign symbol and comma's as the
