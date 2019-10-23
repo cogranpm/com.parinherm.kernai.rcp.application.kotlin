@@ -22,7 +22,9 @@ import javax.inject.Inject
 
 class ReferenceListPart {
 	
-	val ctx: DataBindingContext = DataBindingContext()
+	//no databinding required for readonly list
+	//val ctx: DataBindingContext = DataBindingContext()
+	
 	lateinit var listView: TableViewer
 	val contentProvider: ObservableListContentProvider<Any> = ObservableListContentProvider()
 	//lateinit var knownElements: IObservableSet<ReferenceItem>
@@ -66,7 +68,7 @@ class ReferenceListPart {
 		})
 		
 		
-		val knownElements = contentProvider.getKnownElements()
+		//val knownElements = contentProvider.getKnownElements()
 		//need this is you are doing map type styff
 		
 		val tableLayout: TableColumnLayout = TableColumnLayout()
@@ -80,7 +82,8 @@ class ReferenceListPart {
 			
 		 }
 		
-		ctx.dispose();
+		//no databing required for readonly lists
+		//ctx.dispose();
         listViewer.setContentProvider(contentProvider)
         listViewer.setInput(model.input);
        
