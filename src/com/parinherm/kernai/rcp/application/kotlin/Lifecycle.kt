@@ -39,11 +39,14 @@ class Lifecycle {
 			eventBroker.subscribe(UIEvents.UILifeCycle.APP_STARTUP_COMPLETE, object: EventHandler {
 				
 				override fun handleEvent(event: Event) {
+					if (display.getActiveShell() == null){
+						return
+					}
 					display.getActiveShell().addDisposeListener(object: DisposeListener {
 
 						override fun widgetDisposed(e: DisposeEvent) {
 							
-							managerFactory.getManager().closeConnection()
+							//managerFactory.getManager().closeConnection()
 							/* example of getting object from context
 							if(workbenchContext != null){
 								val connectionVal: Any? = workbenchContext.get("connection")

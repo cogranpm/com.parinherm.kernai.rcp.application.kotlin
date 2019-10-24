@@ -27,7 +27,7 @@ class SqlConnection (driver:String, url:String, schema:String) : DataConnection{
 			connection.setAutoCommit(false)
 		}
 		catch(e: SQLException){
-			e.printStackTrace()
+			//e.printStackTrace()
 			throw e
 		}
 	}

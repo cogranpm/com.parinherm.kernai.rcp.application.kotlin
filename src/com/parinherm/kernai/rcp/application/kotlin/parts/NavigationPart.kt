@@ -41,6 +41,7 @@ import javax.annotation.PostConstruct
 import javax.inject.Inject
 import javax.inject.Named
 import org.eclipse.e4.core.contexts.ContextInjectionFactory
+import javax.annotation.PreDestroy
 
 class NavigationPart {
 
@@ -85,6 +86,8 @@ class NavigationPart {
 	private lateinit var navTree: Tree
 	
 	private lateinit var navigationWorkflow: NavigationWorkflowImpl
+	
+	private val connectionProperties: DataConnectionProperties = DataConnectionProperties()
 	
 
 	@PostConstruct
@@ -150,7 +153,7 @@ class NavigationPart {
 		
 		//if database preference is not set, show the database selector here
 		//which gets the type of database and connection properties
-		val connectionProperties: DataConnectionProperties = DataConnectionProperties()
+		
 		//hard coding embedded derby
 		//connectionProperties.databaseType = derbyEmbeddedManagerKey
 		connectionProperties.databaseType = h2ManagerKey
@@ -178,6 +181,11 @@ class NavigationPart {
 	@Persist
 	fun save() {
 		part.setDirty(false)
+	}
+	
+	@PreDestroy
+	fun dispose() {
+		managerFactory.getManager().closeConnection()
 	}
 
 

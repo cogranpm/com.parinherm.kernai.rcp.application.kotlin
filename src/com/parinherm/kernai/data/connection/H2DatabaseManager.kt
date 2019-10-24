@@ -41,8 +41,8 @@ class H2DatabaseManager : DatabaseManager  {
 	
 	override fun closeConnection()
 	{
-		println("connecton closed on exit")
 		connection.close()
+		println("connecton closed on exit")
 	}
 	
 	override fun getConnection() : DataConnection {
