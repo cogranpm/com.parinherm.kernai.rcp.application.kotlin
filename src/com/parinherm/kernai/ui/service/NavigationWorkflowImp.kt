@@ -63,7 +63,7 @@ class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, a
                 return
             }
             "list" -> loadGenericListAndEditPart("LookupListPart", "LookupEditPart", "List")
-			"kotlin" -> loadGenericListAndEditPart("ReferenceListPart", "ReferenceEditPart", "Kotlin")
+			"kotlin" -> loadGenericEditPart("ReferenceEditPart", "Kotlin")
         }
     }
 
@@ -90,6 +90,18 @@ class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, a
  
         
     }
+	
+	private fun loadGenericEditPart(editClassName: String, label: String){
+		val editPart = modelService.cloneSnippet(application, EDIT_PART_SNIPPET_ID, window) as MPart
+        val container = mainStack
+        editPart.setLabel(label)
+		        
+		/* set the uri on the parts */
+        val editPartURI = "${BUNDLE_PREFIX}${BUNDLE_NAME}/${VIEW_PACKAGE}.${editClassName}"
+        editPart.setContributionURI(editPartURI)
+        container.getChildren().add(editPart)
+		partService.activate(editPart, true)
+	}
 
     private fun loadMainPart(snippetId: String) {
         /* this was old method using individual snippets for each view, changing to use single
@@ -114,6 +126,7 @@ class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, a
         val TEMPLATE_SNIPPET_ID = "com.parinherm.kernai.rcp.application.partstack.template"
         val SCRIPT_SNIPPET_ID = "com.parinherm.kernai.rcp.application.partstack.script"
         val LISTANDEDIT_SNIPPET_ID = "com.parinherm.kernai.rcp.application.kotlin.partstack.listedit"
+		val EDIT_PART_SNIPPET_ID = "com.parinherm.kernai.rcp.application.kotlin.part.edit.snippet"
         val VIEW_PACKAGE = "com.parinherm.kernai.rcp.application.kotlin.parts"
 		val BUNDLE_NAME = FrameworkUtil.getBundle(NavigationWorkflowImpl::class.java).symbolicName //getBundle(getClass().getVersion()) // "com.parinherm.kernai.rcp.application.kotlin"
         val BUNDLE_PREFIX = "bundleclass://"

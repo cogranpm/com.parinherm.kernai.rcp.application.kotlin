@@ -49,6 +49,7 @@
       </children>
     </children>
   </snippets>
+  <snippets xsi:type="basic:Part" xmi:id="_d958UPavEemLsZ-7lgnUuQ" elementId="com.parinherm.kernai.rcp.application.kotlin.part.edit.snippet"/>
   <commands xmi:id="_6wlLfMgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.exit" commandName="quitCommand"/>
   <commands xmi:id="_6wlLgMgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.open" commandName="openCommand"/>
   <commands xmi:id="_6wlLg8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
