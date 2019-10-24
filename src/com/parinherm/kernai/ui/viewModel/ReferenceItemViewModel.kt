@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 import com.parinherm.kernai.data.entity.LookupDetail
 
 class ReferenceItemViewModel {
-	var selectedItem: WritableValue<ReferenceItem> = WritableValue()
+	//var selectedItem: WritableValue<ReferenceItem> = WritableValue()
 	var items: MutableList<ReferenceItem> = mutableListOf()
 	val input = WritableList(items, ReferenceItem::class);
 	val comboLookups = listOf(LookupDetail("mn", "Minnesota"), LookupDetail("ca", "California"), LookupDetail("ny", "New York"))
@@ -45,7 +45,7 @@ class ReferenceItemViewModel {
 		
 		items.add(item1)
 		items.add(item2)
-		selectedItem.value = item1
+		//selectedItem.value = item1
 	}
 	
 }
