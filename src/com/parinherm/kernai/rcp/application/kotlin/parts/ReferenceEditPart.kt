@@ -260,21 +260,11 @@ ILabelProvider labelProvider =
 		listTable.setLinesVisible(true);
 		
 		val bodyColumn: TableViewerColumn = getListColumn(listViewer, "Body", SWT.LEFT)
-		/*bodyColumn.setLabelProvider(object: ColumnLabelProvider() {
-			override fun getText(element: Any): String {
-				val item: ReferenceItem = element as ReferenceItem
-				return item.body
-			}
-		})
- 		*/
-		
-		
-		//val knownElements = contentProvider.getKnownElements()
-		//need this is you are doing map type styff
-		
+		val longColumn: TableViewerColumn = getListColumn(listViewer, "Long", SWT.LEFT)	
 		val tableLayout: TableColumnLayout = TableColumnLayout()
 		listContainer.setLayout(tableLayout)
 		tableLayout.setColumnData(bodyColumn.getColumn(), ColumnWeightData(100))
+		tableLayout.setColumnData(longColumn.getColumn(), ColumnWeightData(100))
 
 		listViewer.addSelectionChangedListener { e ->
 			val item: IStructuredSelection = e.getStructuredSelection()
@@ -286,11 +276,19 @@ ILabelProvider labelProvider =
 		val cp : ObservableListContentProvider<ReferenceItem> = ObservableListContentProvider()
 		val ke : IObservableSet<ReferenceItem> = cp.getKnownElements()
 		val mapBody = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(ke)
-		val labelMaps = arrayOf(mapBody)
-		val lb = ObservableMapLabelProvider(labelMaps)
-		lb.getText({
-			e: ReferenceItem -> e.body
+		val mapLong = PojoProperties.value<ReferenceItem, Long>("testLong").observeDetail<ReferenceItem>(ke)
+		val labelMaps = arrayOf(mapBody, mapLong)
+		val lb = (object: ObservableMapLabelProvider(labelMaps) {
+			override fun getColumnText(element: Any, columnIndex: Int): String{
+				return when (columnIndex){
+					0 -> (element as ReferenceItem).body
+					1 -> "${(element as ReferenceItem).testLong}"
+					else -> ""
+				}
+				
+			}
 		})
+		
 		listViewer.setContentProvider(cp)
 		listViewer.setLabelProvider(lb)
 		listViewer.setInput(model.input)
