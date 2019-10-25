@@ -74,7 +74,6 @@ class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, a
         child.setVisible(true)
         child.setCloseable(true)
         child.setLabel(label)
-
 		        
 		/* set the uri on the parts */
         val partSash = child.getChildren().get(0) as MPartSashContainer
@@ -95,7 +94,8 @@ class NavigationWorkflowImpl @Inject constructor (modelService: EModelService, a
 		val editPart = modelService.cloneSnippet(application, EDIT_PART_SNIPPET_ID, window) as MPart
         val container = mainStack
         editPart.setLabel(label)
-		        
+		editPart.setCloseable(true)
+                
 		/* set the uri on the parts */
         val editPartURI = "${BUNDLE_PREFIX}${BUNDLE_NAME}/${VIEW_PACKAGE}.${editClassName}"
         editPart.setContributionURI(editPartURI)

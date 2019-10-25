@@ -20,7 +20,7 @@
         <children xsi:type="menu:HandledToolItem" xmi:id="_6wlLmMgZEeSyMNYR5xypkQ" elementId="com.parinherm.kernai.rcp.application.kotlin.handleditem.trimbar.top.save" iconURI="platform:/plugin/com.parinherm.kernai.rcp.application.kotlin/icons/save_edit.png" command="_6wlLg8gZEeSyMNYR5xypkQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_6wlLl8gZEeSyMNYR5xypkQ" elementId="com.parinherm.kernai.rcp.application.kotlin.handleditem.trimbar.top.open" iconURI="platform:/plugin/com.parinherm.kernai.rcp.application.kotlin/icons/open_in_app.png" command="_6wlLgMgZEeSyMNYR5xypkQ"/>
         <children xsi:type="menu:HandledToolItem" xmi:id="_WM0VkPWyEemoeIsoDUlWpw" elementId="com.parinherm.kernai.rcp.application.kotlin.handledtoolitem.new" label="New" iconURI="platform:/plugin/com.parinherm.kernai.rcp.application.kotlin/icons/new.png" tooltip="New" command="_EJAnUPWxEemoeIsoDUlWpw"/>
-        <children xsi:type="menu:HandledToolItem" xmi:id="_erAC0PWyEemoeIsoDUlWpw" elementId="com.parinherm.kernai.rcp.application.kotlin.handledtoolitem.delete" label="Delete" iconURI="platform:/plugin/com.parinherm.kernai.rcp.application.kotlin/icons/delete.png" command="_IYBlcPWxEemoeIsoDUlWpw"/>
+        <children xsi:type="menu:HandledToolItem" xmi:id="_erAC0PWyEemoeIsoDUlWpw" elementId="org.eclipse.ui.edit.delete" label="Delete" iconURI="platform:/plugin/com.parinherm.kernai.rcp.application.kotlin/icons/delete.png" command="_IYBlcPWxEemoeIsoDUlWpw"/>
       </children>
     </trimBars>
     <trimBars xmi:id="_uxhOkPHkEeiaGN66jPLD_w" elementId="com.parinherm.kernai.rcp.application.kotlin.trimbar.footer" side="Bottom"/>
@@ -55,7 +55,7 @@
   <commands xmi:id="_6wlLg8gZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.file.save" commandName="saveCommand"/>
   <commands xmi:id="_6wlLhsgZEeSyMNYR5xypkQ" elementId="org.eclipse.ui.help.aboutAction" commandName="aboutCommand"/>
   <commands xmi:id="_EJAnUPWxEemoeIsoDUlWpw" elementId="com.parinherm.kernai.rcp.application.kotlin.command.new" commandName="New" description="new entity toolbar command"/>
-  <commands xmi:id="_IYBlcPWxEemoeIsoDUlWpw" elementId="com.parinherm.kernai.rcp.application.kotlin.command.delete" commandName="Delete"/>
+  <commands xmi:id="_IYBlcPWxEemoeIsoDUlWpw" elementId="org.eclipse.ui.edit.delete" commandName="Delete"/>
   <addons xmi:id="_6wlLcsgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.core.commands.service" contributionURI="bundleclass://org.eclipse.e4.core.commands/org.eclipse.e4.core.commands.CommandServiceAddon"/>
   <addons xmi:id="_6wlLc8gZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.contexts.service" contributionURI="bundleclass://org.eclipse.e4.ui.services/org.eclipse.e4.ui.services.ContextServiceAddon"/>
   <addons xmi:id="_6wlLdMgZEeSyMNYR5xypkQ" elementId="org.eclipse.e4.ui.bindings.service" contributionURI="bundleclass://org.eclipse.e4.ui.bindings/org.eclipse.e4.ui.bindings.BindingServiceAddon"/>

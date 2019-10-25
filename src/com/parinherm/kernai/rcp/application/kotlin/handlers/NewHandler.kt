@@ -7,10 +7,20 @@ import org.eclipse.e4.ui.model.application.ui.basic.MPart
 import org.eclipse.e4.ui.services.IServiceConstants
 import org.eclipse.e4.ui.workbench.modeling.EPartService
 import javax.inject.Named
+import org.eclipse.e4.core.contexts.IEclipseContext
 
 class NewHandler {
 	@Execute
-	fun execute( partService: EPartService, @Optional @Named(IServiceConstants.ACTIVE_PART)  activePart:MPart? ) {
+	fun execute(  context: IEclipseContext, partService: EPartService, @Optional @Named(IServiceConstants.ACTIVE_PART)  activePart:MPart? ) {
+		
+		/*
+ A handler instance does not have its own Eclipse context ( IEclipseContext).
+   It is executed with the Eclipse context of the active model element which has a Eclipse context.
+   In most common cases this is the context of the active part.
+ */
+		
+		
+		
 		if (activePart == null) {
 			return
 		}

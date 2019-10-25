@@ -27,6 +27,7 @@ import java.time.LocalDateTime
 import javax.annotation.PostConstruct
 import javax.inject.Inject
 import javax.inject.Named
+import org.eclipse.e4.core.services.log.Logger
 import org.eclipse.core.databinding.conversion.Converter
 import com.parinherm.kernai.databinding.DateTimeSelectionProperty
 import org.eclipse.core.databinding.observable.value.IObservableValue
@@ -66,6 +67,10 @@ import org.eclipse.e4.ui.workbench.modeling.ESelectionService
 import org.eclipse.jface.databinding.viewers.IViewerObservableValue
 import org.eclipse.jface.databinding.viewers.IViewerObservableList
 import org.eclipse.jface.databinding.viewers.IViewerValueProperty
+import org.eclipse.e4.ui.di.PersistState
+import org.eclipse.e4.ui.workbench.modeling.EPartService
+import org.eclipse.e4.core.contexts.IEclipseContext
+import org.eclipse.e4.ui.model.application.MApplication
 
 class ReferenceEditPart {
 	
@@ -78,7 +83,16 @@ class ReferenceEditPart {
 	private lateinit var part: MPart
 	
 	@Inject
+	private lateinit var application: MApplication
+	
+	@Inject
 	lateinit var selectionService: ESelectionService
+	
+	@Inject
+	lateinit var partService: EPartService
+	
+	@Inject
+	private lateinit var logger: Logger
 		
 	
 	private var txtBody: Text? = null
@@ -112,6 +126,10 @@ class ReferenceEditPart {
 	
 	@PostConstruct
 	fun createComposite(parent: Composite) {
+		
+		//here is how to get the context from within a part:
+		val context : IEclipseContext = application.getContext();
+
 		
 		//get the part state from persisted state
 		//String string = part.getPersistedState().get(Todo.FIELD_ID);
@@ -423,7 +441,36 @@ ILabelProvider labelProvider =
 	fun setFocus() {
 		txtBody?.setFocus()
 		
+		//temp, remove this
+		///new()
+		
 	}
+	
+	/* ----------------------------------------------
+ 	new and delete handlers
+ 	*/
+ 	
+	fun new() {
+		/*
+ 		if the active part is an instance of me then I am active
+ 		*/
+		val activePart: MPart = partService.getActivePart()
+		if (activePart == part){
+			//it's me, we can do new here
+		}
+		
+		/*
+		val obj = activePart.getObject()
+		if(obj is ReferenceEditPart ){
+			logger.error("ReferenceEditPart is the active part")
+		}
+ 		*/
+	}
+	
+	fun delete() {
+		
+	}
+ 	/*------------------------------------------------*/
 
 	/* the real save will use an injected service
 		public void save(ITodoService todoService) {
@@ -437,15 +484,21 @@ ILabelProvider labelProvider =
 		//println(model.selectedItem.value.body)
 		//println(model.selectedItem.value.createdDate)
 		model.items.forEach{
-			println (it.body)
-			println (it.createdDate)
-			println (it.createdDateTime)
+			logger.error (it.body)
+			logger.error (it.createdDate.toString())
+			logger.error (it.createdDateTime.toString())
 		}
 		part.setDirty(false)
 	}
 	
 	@PreDestroy
 	fun dispose() {
+		logger.error("disposed called on part")
 		ctx.dispose()
+	}
+	
+	@PersistState
+	fun persistState(){
+		println("persiststate called on part")
 	}
 }
