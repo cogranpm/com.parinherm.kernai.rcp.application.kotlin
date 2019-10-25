@@ -71,6 +71,13 @@ import org.eclipse.e4.ui.di.PersistState
 import org.eclipse.e4.ui.workbench.modeling.EPartService
 import org.eclipse.e4.core.contexts.IEclipseContext
 import org.eclipse.e4.ui.model.application.MApplication
+import org.eclipse.jface.databinding.viewers.ViewerSupport
+import org.eclipse.core.databinding.property.value.IValueProperty
+import org.eclipse.core.databinding.beans.typed.BeanProperties
+import org.eclipse.core.databinding.beans.IBeanValueProperty
+import org.eclipse.core.databinding.observable.set.IObservableSet
+import org.eclipse.core.databinding.observable.map.IObservableMap
+import org.eclipse.jface.databinding.viewers.ObservableMapLabelProvider
 
 class ReferenceEditPart {
 	
@@ -253,12 +260,13 @@ ILabelProvider labelProvider =
 		listTable.setLinesVisible(true);
 		
 		val bodyColumn: TableViewerColumn = getListColumn(listViewer, "Body", SWT.LEFT)
-		bodyColumn.setLabelProvider(object: ColumnLabelProvider() {
+		/*bodyColumn.setLabelProvider(object: ColumnLabelProvider() {
 			override fun getText(element: Any): String {
 				val item: ReferenceItem = element as ReferenceItem
 				return item.body
 			}
 		})
+ 		*/
 		
 		
 		//val knownElements = contentProvider.getKnownElements()
@@ -275,10 +283,22 @@ ILabelProvider labelProvider =
 			
 		 }
 		
-		//no databing required for readonly lists
-		//ctx.dispose();
-        listViewer.setContentProvider(contentProvider)
-        listViewer.setInput(model.input);
+		val cp : ObservableListContentProvider<ReferenceItem> = ObservableListContentProvider()
+		val ke : IObservableSet<ReferenceItem> = cp.getKnownElements()
+		val mapBody = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(ke)
+		val labelMaps = arrayOf(mapBody)
+		val lb = ObservableMapLabelProvider(labelMaps)
+		lb.getText({
+			e: ReferenceItem -> e.body
+		})
+		listViewer.setContentProvider(cp)
+		listViewer.setLabelProvider(lb)
+		listViewer.setInput(model.input)
+	
+		//listViewer.setContentProvider(contentProvider)
+        //listViewer.setInput(model.input);
+		//val listValues : Array<IBeanValueProperty<ReferenceItem, Any>> = PojoProperties.values<ReferenceItem, Any>("body")
+		//ViewerSupport.bind(listViewer, model.input, listValues as IValueProperty<ReferenceItem, Any>)
 		
 		enableUserInterface(false)
 
@@ -416,6 +436,7 @@ ILabelProvider labelProvider =
 		
 		val  errorObservable: IObservableValue<String> = WidgetProperties.text<Label>().observe(lblError)
 		val allValidationBinding: Binding = ctx.bindValue(errorObservable, AggregateValidationStatus(ctx.getBindings(), AggregateValidationStatus.MAX_SEVERITY), null, null)
+
 
 	}
 	
