@@ -277,7 +277,8 @@ ILabelProvider labelProvider =
 		val ke : IObservableSet<ReferenceItem> = cp.getKnownElements()
 		val mapBody = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(ke)
 		val mapLong = PojoProperties.value<ReferenceItem, Long>("testLong").observeDetail<ReferenceItem>(ke)
-		val labelMaps = arrayOf(mapBody, mapLong)
+		val labelMaps  = arrayOf(mapBody, mapLong)
+		
 		val lb = (object: ObservableMapLabelProvider(labelMaps) {
 			override fun getColumnText(element: Any, columnIndex: Int): String{
 				return when (columnIndex){
