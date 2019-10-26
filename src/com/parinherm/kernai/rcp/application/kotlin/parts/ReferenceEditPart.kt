@@ -273,31 +273,39 @@ ILabelProvider labelProvider =
 			
 		 }
 		
-		val cp : ObservableListContentProvider<ReferenceItem> = ObservableListContentProvider()
-		val ke : IObservableSet<ReferenceItem> = cp.getKnownElements()
-		val mapBody = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(ke)
-		val mapLong = PojoProperties.value<ReferenceItem, Long>("testLong").observeDetail<ReferenceItem>(ke)
-		val labelMaps  = arrayOf(mapBody, mapLong)
 		
-		val lb = (object: ObservableMapLabelProvider(labelMaps) {
-			override fun getColumnText(element: Any, columnIndex: Int): String{
-				return when (columnIndex){
-					0 -> (element as ReferenceItem).body
-					1 -> "${(element as ReferenceItem).testLong}"
-					else -> ""
-				}
-				
-			}
-		})
+		//observable method for lists
+//		val cp : ObservableListContentProvider<ReferenceItem> = ObservableListContentProvider()
+//		val ke : IObservableSet<ReferenceItem> = cp.getKnownElements()
+//		val mapBody = PojoProperties.value<ReferenceItem, String>("body").observeDetail<ReferenceItem>(ke)
+//		val mapLong = PojoProperties.value<ReferenceItem, Long>("testLong").observeDetail<ReferenceItem>(ke)
+//		val labelMaps  = arrayOf(mapBody, mapLong)
+//		
+//		val lb = (object: ObservableMapLabelProvider(labelMaps) {
+//			override fun getColumnText(element: Any, columnIndex: Int): String{
+//				return when (columnIndex){
+//					0 -> (element as ReferenceItem).body
+//					1 -> "${(element as ReferenceItem).testLong}"
+//					else -> ""
+//				}
+//				
+//			}
+//		})
+//		
 		
-		listViewer.setContentProvider(cp)
-		listViewer.setLabelProvider(lb)
-		listViewer.setInput(model.input)
-	
+//		listViewer.setContentProvider(cp)
+//		listViewer.setLabelProvider(lb)
+//		listViewer.setInput(model.input)
+//
+		
+		//simple non databound list
 		//listViewer.setContentProvider(contentProvider)
         //listViewer.setInput(model.input);
-		//val listValues : Array<IBeanValueProperty<ReferenceItem, Any>> = PojoProperties.values<ReferenceItem, Any>("body")
-		//ViewerSupport.bind(listViewer, model.input, listValues as IValueProperty<ReferenceItem, Any>)
+	
+		//ViewerSupport method
+		val item: IValueProperty<ReferenceItem, String> = PojoProperties.value<ReferenceItem, String>("body")
+		val longItem: IValueProperty<ReferenceItem, Long> = PojoProperties.value<ReferenceItem, Long>("testLong")
+		ViewerSupport.bind(listViewer, model.input, item, longItem)
 		
 		enableUserInterface(false)
 
@@ -504,9 +512,9 @@ ILabelProvider labelProvider =
 		//println(model.selectedItem.value.body)
 		//println(model.selectedItem.value.createdDate)
 		model.items.forEach{
-			logger.error (it.body)
-			logger.error (it.createdDate.toString())
-			logger.error (it.createdDateTime.toString())
+			logger.error (it.getBody())
+			logger.error (it.getCreatedDate().toString())
+			logger.error (it.getCreatedDateTime().toString())
 		}
 		part.setDirty(false)
 	}

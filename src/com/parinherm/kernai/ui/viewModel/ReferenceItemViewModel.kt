@@ -1,16 +1,17 @@
 package com.parinherm.kernai.ui.viewModel
 
 import com.parinherm.kernai.data.entity.ReferenceItem
-import org.eclipse.core.databinding.observable.list.WritableList
 import org.eclipse.core.databinding.observable.value.WritableValue
 import java.time.LocalDate
 import java.time.LocalDateTime
 import com.parinherm.kernai.data.entity.LookupDetail
+import org.eclipse.core.databinding.observable.list.WritableList
+import org.eclipse.core.databinding.observable.Realm
 
 class ReferenceItemViewModel {
 	//var selectedItem: WritableValue<ReferenceItem> = WritableValue()
-	var items: MutableList<ReferenceItem> = mutableListOf()
-	val input = WritableList(items, ReferenceItem::class);
+	var items: ArrayList<ReferenceItem> = ArrayList<ReferenceItem>()
+	val input = WritableList<ReferenceItem>(items, Realm.getDefault());
 	val comboLookups = listOf(LookupDetail("mn", "Minnesota"), LookupDetail("ca", "California"), LookupDetail("ny", "New York"))
 	
 	init {

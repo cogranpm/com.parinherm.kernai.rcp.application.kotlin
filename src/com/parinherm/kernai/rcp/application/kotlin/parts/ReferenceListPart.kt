@@ -63,7 +63,7 @@ class ReferenceListPart {
 		bodyColumn.setLabelProvider(object: ColumnLabelProvider() {
 			override fun getText(element: Any): String {
 				val item: ReferenceItem = element as ReferenceItem
-				return item.body
+				return item.getBody()
 			}
 		})
 		
